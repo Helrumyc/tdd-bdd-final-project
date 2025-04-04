@@ -47,6 +47,81 @@ def step_impl(context):
     # load the database with new products
     #
     for row in context.table:
-        #
-        # ADD YOUR CODE HERE TO CREATE PRODUCTS VIA THE REST API
-        #
+        payload = {
+            "name": row['name'],
+            "description": row['description'],
+            "price": row['price'],
+            "available": row['available'] in ['True', 'true', '1'],
+            "category": row['category']
+        }
+        context.resp = requests.post(rest_endpoint, json=payload)
+        assert(context.resp.status_code == HTTP_201_CREATED)
+
+@when(u'I press the "Clear" button')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When I press the "Clear" button')
+
+
+@then(u'I should see the message "Sucess"')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see the message "Sucess"')
+
+
+@when(u'I press the "Search" button')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When I press the "Search" button')
+
+
+@when(u'I press the "Update" button')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When I press the "Update" button')
+
+
+@then(u'I should see "Fedora" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see "Fedora" in the results')
+
+
+@then(u'I should not see "Hat" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should not see "Hat" in the results')
+
+
+@when(u'I press the "Delete" button')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When I press the "Delete" button')
+
+
+@then(u'I should see the message "Product has been Deleted!"')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see the message "Product has been Deleted!"')
+
+
+@then(u'I should see "Hat" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see "Hat" in the results')
+
+
+@then(u'I should see "Shoes" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see "Shoes" in the results')
+
+
+@then(u'I should see "Big Mac" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see "Big Mac" in the results')
+
+
+@then(u'I should see "Sheets" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should see "Sheets" in the results')
+
+
+@then(u'I should not see "Shoes" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should not see "Shoes" in the results')
+
+
+@then(u'I should not see "Sheets" in the results')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I should not see "Sheets" in the results')
