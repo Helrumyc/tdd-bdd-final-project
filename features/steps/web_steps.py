@@ -29,12 +29,10 @@ from behave import when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions
-from selenium.common.exceptions import TimeoutException
 
 ID_PREFIX = 'product_'
 BUTTON_SUFFIX = '-btn'
 SEARCH_RESULTS = 'search_results'
-FLASH_MESSAGE = 'flash_message'
 
 
 @when('I visit the "Home Page"')
@@ -131,11 +129,11 @@ def step_impl(context, text_string, element_name):
     )
     assert(found)
 
-@then('I should see "{name} in the results')
+@then('I should see "{name}" in the results')
 def step_impl(context, name):
-    found = WebDriverWait(context.driver, 60).until(
+    found = WebDriverWait(context.driver, context.wait_seconds).until(
         expected_conditions.text_to_be_present_in_element(
-            (By.ID, SEARCH_RESULTS),
+            (By.ID, 'search_results'),
             name
         )
     )
@@ -147,18 +145,15 @@ def step_impl(context, name):
     assert(name not in element.text)
 
 @then('I should see the message "{message}"')
-def step_impl(context, message):
-    try:
-        found = WebDriverWait(context.driver, 60).until(
-            expected_conditions.text_to_be_present_in_element(
-                (By.ID, 'flash_message'),
-                message
-            )
+def step_impl(context, message):    
+    found = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.text_to_be_present_in_element(
+            (By.ID, 'flash_message'),
+            message
         )
-        assert(found)
-    except TimeoutException:
-        raise AssertionError(f"Timeout: Expected message '{message}' not found within {context.wait_seconds} seconds.")
-
+    )
+    assert(found)
+    
 @when('I change "{element_name}" to "{text_string}"')
 def step_impl(context, element_name, text_string):
     element_id = ID_PREFIX + element_name.lower().replace(' ', '_')
